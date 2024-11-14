@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="../mod_interactivepdf_style.css">
+
+<div>
+    <h2>{{page}}</h2>
+</div>
+
+<div class="buttons d-flex">
+    <a class="edit-btn text-decoration-none" href="edit_page.php?id={{cmid}}&pageid={{pageid}}"><div class="bg-info text-white p-3 rounded shadow">Edit Page</div></a>
+    <a class="add-content-btn text-decoration-none" href="add_content.php?id={{cmid}}&pageid={{pageid}}"><div class="bg-success text-white p-3 rounded shadow ml-2">Add Content</div></a>
+<!--    <a class="add-content-btn text-decoration-none" href="edit_content.php?id={{cmid}}&pageid={{pageid}}"><div class="bg-success text-white p-3 rounded shadow ml-2">Edit Content</div></a>-->
+    <a class="quiz-btn text-decoration-none" href="quiz.php?id={{cmid}}&pageid={{pageid}}"><div class="bg-danger text-white p-3 rounded shadow ml-2">Quiz</div></a>
+</div>
+
+<h3 class="text-center py-4 bg-gray mt-3">Contents</h3>
+<table class="table table-bordered table-info table-striped">
+    <thead>
+    <tr>
+        <th class="text-center">Content</th>
+        <th class="text-center">Edit</th>
+        <th class="text-center">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#contents}}
+        <tr>
+            <td>{{{html}}}</td>
+            <td><a class="btn btn-info" href="edit_html.php?id={{cmid}}&pageid={{pageid}}&contentid={{contentid}}">Edit</a></td>
+            <td><a class="btn btn-danger" href="delete_content.php?id={{cmid}}&pageid={{pageid}}&contentid={{contentid}}">Delete</a></td>
+        </tr>
+    {{/contents}}
+    </tbody>
+</table>
+
+

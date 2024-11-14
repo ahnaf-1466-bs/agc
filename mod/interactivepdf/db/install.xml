@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLDB PATH="mod/interactivepdf/db" VERSION="20230519" COMMENT="XMLDB file for interactivepdf module" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="interactivepdf" COMMENT="each record is one interactivepdf resource">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+				<FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+				<FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+				<FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="attempts" TYPE="int" LENGTH="6" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The maximum number of attempts a student is allowed."/>
+				<FIELD NAME="grademethod" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="One of the values QUIZ_GRADEHIGHEST, QUIZ_GRADEAVERAGE, QUIZ_ATTEMPTFIRST or QUIZ_ATTEMPTLAST."/>
+				<FIELD NAME="grade" TYPE="number" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" DECIMALS="5" COMMENT="The total that the quiz overall grade is scaled to be out of."/>
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id" />
+			</KEYS>
+			<INDEXES>
+				<INDEX NAME="course" UNIQUE="false" FIELDS="course" />
+			</INDEXES>
+        </TABLE>
+        <TABLE NAME="interactivepdf_pages" COMMENT="each record is one page content">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="title" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="description" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" FIELDS="interactivepdfid" TYPE="foreign" REFTABLE="interactivepdf" REFFIELDS="id" />
+			</KEYS>
+            <INDEXES>
+				<INDEX NAME="id" FIELDS="id" UNIQUE="true" />
+			</INDEXES>
+		</TABLE>
+		<TABLE NAME="interactivepdf_contents" COMMENT="each record is one page content">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="content_rank" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="page_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="type" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="page_id" TYPE="foreign" FIELDS="page_id" REFTABLE="interactivepdf_pages" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_htmls" COMMENT="each record is one content html type">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="content_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="html" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="content_id" TYPE="foreign" FIELDS="content_id" REFTABLE="interactivepdf_contents" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_quizzes" COMMENT="each record is one content quiz type">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="content_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="question" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="correct_ans" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="content_id" TYPE="foreign" FIELDS="content_id" REFTABLE="interactivepdf_contents" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_options" COMMENT="each record is quiz's option">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="quiz_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="option_text" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="quiz_id" TYPE="foreign" FIELDS="quiz_id" REFTABLE="interactivepdf_quizzes" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_attempts" COMMENT="attempt status">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="attempt" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="status" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="feedback_submit" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timestart" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Time when the attempt was started."/>
+				<FIELD NAME="timefinish" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Time when the attempt was submitted. 0 if the attempt has not been submitted yet."/>
+				<FIELD NAME="teacher_sign" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
+				<FIELD NAME="teacher_name" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
+				<FIELD NAME="student_sign" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
+				<FIELD NAME="student_name" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
+				<FIELD NAME="overall_feedback" TYPE="text" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_answers" COMMENT="Defines interactivepdf_answers">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="quiz_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="quiz_type" TYPE="text" LENGTH="50" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="grade" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="answer" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="feedback" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="quiz_id" TYPE="foreign" FIELDS="quiz_id" REFTABLE="interactivepdf_quizzes" REFFIELDS="id"/>
+      		</KEYS>
+        </TABLE>
+		<TABLE NAME="interactivepdf_subquestions" COMMENT="each record is subquestion of short questions">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="quiz_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="question_text" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="correct_ans" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="type" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="quiz_id" TYPE="foreign" FIELDS="quiz_id" REFTABLE="interactivepdf_quizzes" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_3ns" COMMENT="each record is subquestion of 3n table">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header1" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header2" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header3" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_3n_questions" COMMENT="each record is 3n's table question">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="nid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />  <!--this is nid which is id of 3ns table-->
+				<FIELD NAME="question_text" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="right_ans1" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="right_ans2" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="nid" TYPE="foreign" FIELDS="nid" REFTABLE="interactivepdf_3ns" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_3n_qanswers" COMMENT="each record is 3n's table question's answer">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="nquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="answer1" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="answer2" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="feedback" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="quiz_type" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+				<KEY NAME="nquestionid" TYPE="foreign" FIELDS="nquestionid" REFTABLE="interactivepdf_3n_questions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2ns" COMMENT="each record is subquestion of 2n Single table">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header1" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header2" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2n_squestions" COMMENT="each record is 2n Single table question">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="nid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />  <!--this is nid which is id of 3ns table-->
+				<FIELD NAME="question_text" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="right_ans" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="nid" TYPE="foreign" FIELDS="nid" REFTABLE="interactivepdf_2ns" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2n_sqanswers" COMMENT="each record is 2n single table question's answer">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="snquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="answer" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="feedback" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="quiz_type" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+				<KEY NAME="snquestionid" TYPE="foreign" FIELDS="snquestionid" REFTABLE="interactivepdf_2n_squestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2nms" COMMENT="each record is subquestion of 2n Multi table">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header1" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="header2" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2n_mquestions" COMMENT="each record is 2n Multi table question">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="nid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />  <!--this is nid which is id of 3ns table-->
+				<FIELD NAME="question_text" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="right_ans1" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="right_ans2" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="nid" TYPE="foreign" FIELDS="nid" REFTABLE="interactivepdf_2nms" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_2n_mqanswers" COMMENT="each record is 2n Multi table question's answer">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="mnquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="answer1" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="answer2" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+				<FIELD NAME="feedback" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="quiz_type" TYPE="text" NOTNULL="false" SEQUENCE="false"/></FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+				<KEY NAME="mnquestionid" TYPE="foreign" FIELDS="mnquestionid" REFTABLE="interactivepdf_2n_mquestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_grades" COMMENT="interactivepdf grades table">
+			<FIELDS>
+				<FIELD NAME="id" SEQUENCE="true" TYPE="int" NOTNULL="true" LENGTH="10"/>
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+				<FIELD NAME="grade" TYPE="float" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="users" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="interactivepdf_feedback" COMMENT="interactivepdf grades table">
+			<FIELDS>
+				<FIELD NAME="id" SEQUENCE="true" TYPE="int" NOTNULL="true" LENGTH="10"/>
+				<FIELD NAME="interactivepdfid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+				<FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+				<FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="subquestionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+				<FIELD NAME="feedback" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="feedbackcomment" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+				<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+				<FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" FIELDS="id" TYPE="primary" />
+				<KEY NAME="interactivepdfid" TYPE="foreign" FIELDS="interactivepdfid" REFTABLE="interactivepdf" REFFIELDS="id"/>
+				<KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="users" REFFIELDS="id"/>
+				<KEY NAME="subquestionid" TYPE="foreign" FIELDS="subquestionid" REFTABLE="interactivepdf_subquestions" REFFIELDS="id"/>
+			</KEYS>
+		</TABLE>
+  </TABLES>
+</XMLDB>

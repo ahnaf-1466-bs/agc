@@ -1,0 +1,304 @@
+.coursebox {
+
+	background-color: $color_gray2;
+	border-left: solid 2px $accent1;
+	margin-bottom: 3rem;
+
+	&.course-hidden {
+		opacity: .5;
+	}
+
+	&.even {
+		background-color: $color_gray2;
+		border-left-color: $accent2;
+	}
+
+	&.noinfobox,
+	&.noinfobox.even {
+
+		padding: 0 !important;
+        margin-bottom: 0 !important;
+        background-color: transparent;
+        border: 0 !important;
+
+		> div {
+			background-color: $color_gray2;
+			border-left: solid 2px $accent1;
+			margin-bottom: 3rem;
+			padding: 0 1rem;
+			@include mb2_box_shadow(3px 3px 0 0, rgba(0,0,0,.1));
+		}
+
+	}
+
+
+	&.noinfobox.even {
+
+
+		> div {
+			border-left-color: $accent2;
+		}
+
+	}
+
+
+
+
+	.content-inner {
+		margin-left: -15px;
+		margin-right: -15px;
+		padding: 1.3rem 0;
+		@include clearfix();
+
+		.course-content,
+		.course-media {
+			float: left;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+
+		.course-content {
+			width: 60%;
+		}
+
+		.course-media {
+			width: 40%;
+			@include mb2_image_effect2();
+		}
+
+		.summary,
+		.coursecat,
+		.teachers,
+		.courseimage,
+		.coursefile {
+			float: none;
+		}
+
+		.summary {
+			margin: 0 0 .35rem 0;
+			width: 100%;
+		}
+
+		.coursename {
+			font-size: $fsheading4;
+			a {
+				color: inherit;
+			}
+		}
+
+		.enrolmenticons {
+			display: inline-block;
+			background-color: rgba(0,0,0,.08);
+			color: rgba(0,0,0,.35);
+			padding: 0 0 0 .5rem;
+			@include mb2_border_radius(.15rem);
+		}
+
+		.teachers,
+		.coursecat {
+			margin: 1rem .6rem .3rem 0;
+			text-align: left;
+			font-size: $fssmall;
+			padding: 0 .45rem;
+			background-color: $color_box_bg;
+			border: solid 1px lighten($color_border,3%);
+			@include mb2_border_radius(.15rem);
+			display: inline-block;
+			width: auto;
+
+			a {
+				color: inherit;
+
+				&:hover,
+				&:focus {
+					color: $linkcolor;
+				}
+			}
+
+		}
+
+		.course-readmore {
+			margin-top: 1rem;
+		}
+
+	}
+
+	&.isinfobox {
+		.course-content {
+			.enrolmenticons {
+				display: none;
+			}
+		}
+
+	}
+
+	&.summaryisp {
+		.content-inner {
+
+			.teachers,
+			.coursecat {
+				margin: .35rem .6rem 1rem 0;
+			}
+
+			.course-readmore {
+				margin-top: .35rem;
+			}
+		}
+	}
+
+	&.nosummary {
+		.content-inner {
+			.coursename {
+				margin-bottom: .35rem;
+			}
+		}
+	}
+
+
+}
+
+
+
+
+/* Course grid layout */
+
+.category-browse,
+.frontpage-course-list-all,
+.frontpage-course-list-enrolled {
+
+	@include clearfix();
+
+    .subcategories +& {
+        margin-top: 1.35rem;
+    }
+
+    .course-layout-grid & {
+        margin-left: -15px;
+        margin-right: -15px;
+
+        .noinfobox {
+            width: 50%;
+            display: inline-block;
+            vertical-align: top;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            > div {
+                border: 0;
+            }
+
+            .course-content,
+            .course-media {
+                padding-left: 0;
+                padding-right: 0;
+                width: 100%;
+            }
+
+            .course-media {
+                margin-bottom: 1.3rem;
+            }
+
+			.coursename {
+				margin-bottom: .9rem;
+			}
+
+			.enrolmenticons {
+				float: none;
+				margin-bottom: .2rem;
+			}
+
+            .summary {
+                max-height: 4.5rem;
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 10px;
+
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    @include gradient-y(rgba(255,255,255,0), $color_gray2);
+                }
+
+            }
+
+			.teachers,
+			.coursecat,
+			.course-readmore {
+				display: none;
+			}
+        }
+
+        .content-inner.fileandcontent {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    &.course_category_tree {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .hide-sidebars.course-layout-grid &,
+    .nosidebar-case.course-layout-grid & {
+        .noinfobox {
+            width: 33.3333333333%;
+        }
+    }
+
+}
+
+
+
+@media only screen and (max-width: $wdmediumdevice) {
+
+	.coursebox {
+		.content-inner {
+			.course-content,
+			.course-media {
+				width: 100%;
+			}
+
+			.course-media {
+				margin-bottom: 1.35rem;
+			}
+		}
+	}
+
+
+	.category-browse,
+    .frontpage-course-list-all,
+	.frontpage-course-list-enrolled {
+
+        .hide-sidebars.course-layout-grid &,
+        .nosidebar-case.course-layout-grid & {
+            .noinfobox {
+                width: 50%;
+            }
+        }
+
+    }
+}
+
+
+
+@media only screen and (max-width: $wxsmalldevice){
+	.category-browse,
+    .frontpage-course-list-all,
+	.frontpage-course-list-enrolled {
+
+        .course-layout-grid & {
+
+            .noinfobox {
+                width: 100% !important;
+				float: none;
+            }
+
+        }
+    }
+}

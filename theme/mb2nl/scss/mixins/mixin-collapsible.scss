@@ -1,0 +1,171 @@
+
+@mixin mb2_collabsible_item_icon()
+{
+    $icon_size: 22px;
+
+    &:before {
+        position: absolute;
+        display: block !important;
+        width: $icon_size;
+        height: $icon_size;
+        right: .45rem;
+        top: 50%;
+        margin-top: ($icon_size/2) * -1;
+        content: '\002d';
+        text-align: center;
+		text-indent: -1px;
+        line-height: $icon_size - 2 !important;
+        color: inherit;
+        @include mb2_border_radius(50%);
+        @include mb2_transition1(all, .15s);
+    }
+
+}
+
+
+@mixin mb2_collabsible_item_icon_collapsed()
+{
+    $icon_size: 22px;
+
+    &:before {
+        content: '\0002b';
+        color: rgba(0,0,0,.35);
+    }
+
+}
+
+
+@mixin mb2_collabsible_item()
+{
+    margin-left: 0;
+    border: 0;
+    margin-bottom: .8rem;
+
+    legend,
+    .categoryname,
+    [data-toggle="collapse"] {
+
+        margin: 0 !important;
+        font-size: inherit;
+        position: relative;
+        font-weight: var(--mb2-pb-fwheadings);
+        padding: 10px 15px !important;
+        background-color: $color_gray3;
+        line-height: inherit;
+        @include mb2_transition1(all, .15s);
+		@include mb2_border_radius(.15rem);
+		border: 0;
+
+        > button,
+        > a {
+            color: inherit;
+        }
+
+        &:hover {
+            background-color: $color_gray3 !important;
+        }
+    }
+
+    /* ======================= STYLE FOR ACCORDION ITEM  */
+
+    // [data-toggle="collapse"] {
+    //     display: block;
+    //     width: 100%;
+    //     text-align: inherit;
+    //     color: inherit;
+    //     font-size: $fsgeneral;
+    //
+    //     @include mb2_collabsible_item_icon();
+    //
+    //     &[aria-expanded="false"] {
+    //         @include mb2_collabsible_item_icon_collapsed();
+    //         background-color: lighten($color_gray3,2.8%);
+    //     }
+    // }
+
+
+    /* ======================= STYLE FOR MOODLE SETTINGS COLLAPSIBLE ITEM */
+
+    legend {
+
+        &.sr-only {
+            padding: 0 !important;
+            border: 0;
+            background-color: transparent !important;
+        }
+
+        > a {
+
+            &.fheader {
+                padding: 0 !important;
+                margin-left: 0;
+                display: block;
+                position: relative;
+                background-image: none !important;
+                @include mb2_collabsible_item_icon();
+
+                &:before {
+                    right: 0;
+                    text-indent: 1px;
+                    line-height: 22px !important;
+                }
+            }
+
+            &.btn {
+                position: absolute;
+                right: 3rem;
+                top: .6rem;
+            }
+        }
+
+
+    }
+
+    &.collapsed {
+        legend {
+            > a {
+                &.fheader {
+                    @include mb2_collabsible_item_icon_collapsed();
+                }
+            }
+
+            background-color: lighten($color_gray3,2.8%);
+
+			&:hover:before {
+				background-color: rgba(0,0,0,.12);
+			}
+        }
+    }
+
+    /* ======================= STYLE FOR COURSE CATEGORIES TREE */
+
+    .categoryname {
+        padding-right: 2.45rem !important;
+        background-image: none !important;
+        @include mb2_collabsible_item_icon();
+
+        .categoryname {
+            margin-top: .8rem !important;
+        }
+
+    }
+
+    &.collapsed {
+        > div > .categoryname {
+            @include mb2_collabsible_item_icon_collapsed();
+            background-color: lighten($color_gray3,2.8%);
+
+
+			&:hover:before {
+				background-color: rgba(0,0,0,.12);
+			}
+        }
+    }
+
+    /* ======================= STYLE FOR COLLAPSIBLE CONTENT CONTAINER */
+
+    .fcontainer {
+        padding: 1.25rem 1rem;
+    }
+
+}

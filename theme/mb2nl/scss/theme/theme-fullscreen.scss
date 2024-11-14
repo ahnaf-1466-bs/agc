@@ -1,0 +1,479 @@
+
+$fsmode_headerh:  $logohsm + 14px;
+
+/* ======================= BASIC LAYOUT */
+
+.fsmod-wrap {
+    display: flex;
+    flex-flow: wrap;
+    position: fixed;
+    left: 0;
+    top: $fsmode_headerh;
+    right: 0;
+    bottom: 0;
+
+    @media only screen and (min-width: $wdmediumdevice) {
+        .issidebar & {
+            left: 300px;
+        }
+    }
+
+ }
+
+.fsmod-course-content {
+    flex: 0 0 100%;
+    max-width: 100%;
+    height: 100%;
+
+    .mod_introbox {
+        padding: 0;
+    }
+}
+
+.fsmod-course-sections {
+    width: 300px;
+    max-width: 100%;
+    border-right: solid 1px rgba(0,0,0,.1);
+    z-index: 4;
+    position: fixed;
+    left: -300px;
+    top: $fsmode_headerh;
+    bottom: 0;
+    background-color: lighten($color_gray2, 3%);
+
+    @media only screen and (min-width: $wdmediumdevice) {
+        .issidebar & {
+            left: 0;
+        }
+    }
+
+    @media only screen and (max-width: $wdmediumdevice) {
+        .ismsidebar & {
+            left: 0;
+        }
+    }
+}
+
+
+.fsmod1 #main-content,
+.fsmod-sections-wrap {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.fsmod-wrap .content-col#region-main {
+    padding: 0 3rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media only screen and (max-width: $wdmediumdevice) {
+        padding: 0 2rem;
+    }
+
+    @media only screen and (max-width: $wsmalldevice) {
+        padding: 0 1rem;
+    }
+
+}
+
+
+
+
+
+/* ======================= HEADER STYLE */
+
+#fsmod-header {
+    background-color: #fff;
+    height: $fsmode_headerh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    @include mb2_box_shadow(0 2px 4px, rgba(0,0,0,.15));
+    border-bottom: solid 1px rgba(0,0,0,.155);
+
+    .logo-dark {
+        display: none;
+    }
+
+    .logo-wrap {
+        margin-left: 1.4rem;
+    }
+
+    .fsmod-header-inner {
+        height: 100%;
+        position: relative;
+
+        &.flexcols {
+            justify-content: flex-start;
+        }
+    }
+
+    .theme-course-progress {
+        margin-right: auto;
+    }
+
+
+}
+
+
+.fsmod-header-links {
+    margin-left: auto;
+    margin-right: calc(52px + 1.6rem);
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+
+
+
+.fsmod-backlink {
+    position: absolute;
+    width: $fsmode_headerh;
+    height: 100%;
+    right: 0;
+    top: 0;
+    line-height: $fsmode_headerh;
+    text-align: center;
+    background-color: $color_gray2;
+    font-size: 42px;
+    color: $textcolor;
+
+    &:hover,
+    &:focus {
+        color: $textcolor;
+    }
+
+    i {
+        line-height: inherit;
+    }
+}
+
+
+/* ======================= MY COURSES */
+
+#fsmod-header {
+    .mycourses {
+        ul {
+            display: none;
+        }
+    }
+}
+
+
+
+/* ======================= TOGGLE TABLE OF CONTENT AND BLOCKS */
+
+.fsmod-section-tools {
+    background-color: $color_gray2;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    padding: .32rem;
+
+    button {
+        height: 32px;
+        width: 32px;
+        font-size: $fssmall;
+        color: $textcolor;
+        font-weight: $fwbold;
+        border-radius: 50%;
+        margin: 0 .2rem;
+
+        &.active {
+            background-color: #fff;
+        }
+    }
+}
+
+
+/* ======================= SIDEBAR BLOCKS */
+
+.fsmod-section {
+    display: none;
+    background-color: #fff;
+    border-top: solid 1px rgba(0,0,0,.1);
+    border-bottom: solid 1px rgba(0,0,0,.1);
+
+    &.active {
+        display: block;
+    }
+
+    .quicklinks-list {
+        padding: 1rem .65rem;
+    }
+}
+
+.fsmod-blocks {
+    padding: 2rem 1.4rem;
+
+    .block {
+        margin-bottom: 2rem !important;
+    }
+}
+
+
+
+/* ======================= MENU TOGGLE BUTTON */
+
+.fsmod-showhide-sidebar {
+
+    .fsmod-header-inner & {
+        margin-left: 1.4rem;
+    }
+
+    .img-icon {
+
+        svg {
+            display: block;
+            width: 17px;
+        }
+
+        path {
+            fill: var(--mb2-pb-textcolor);
+        }
+
+    }
+
+    @media only screen and (min-width: $wdmediumdevice) {
+
+        .icon-expand {
+            display: none;
+        }
+
+        .issidebar & {
+            .icon-compress {
+                display: none;
+            }
+
+            .icon-expand {
+                display: block;
+            }
+        }
+    }
+
+    @media only screen and (max-width: $wdmediumdevice) {
+
+        .icon-expand {
+            display: none;
+        }
+
+        .icon-compress {
+            display: block;
+        }
+
+        .ismsidebar & {
+            .icon-expand {
+                display: block;
+            }
+
+            .icon-compress {
+                display: none;
+            }
+        }
+    }
+}
+
+
+
+/* ======================= COURSE PANEL BUTTON */
+
+.panel-link {
+    .fsmod-header-inner & {
+        font-size: 20px;
+        color: var(--mb2-pb-textcolor);
+        margin-left: auto;
+        line-height: 1;
+    }
+}
+
+
+/* ======================= COURSE PROGRESS */
+
+.theme-course-progress {
+
+    line-height: 1;
+
+    .fsmod-progress-bar {
+        background-color: rgba(0,0,0,.12);
+        @include mb2_border_radius(999px);
+        margin-top: .3rem;
+
+        > div {
+            background-color: $color_success;
+            height: 6px;
+            @include mb2_border_radius(999px);
+        }
+    }
+
+    .progress-value {
+        font-weight: $fwbold;
+        color: var(--mb2-pb-headingscolor);
+    }
+
+    .fsmod-course-sections & {
+        padding: 1rem 1.4rem;
+        font-size: $fssmall;
+    }
+
+    .sidebar-col & {
+		margin-bottom: 2.5rem;
+		max-width: 170px;
+	}
+
+}
+
+
+
+
+/* ======================= HIDE REGULAR ELEMENTS */
+
+.fsmod1 {
+
+    .admin-region
+    // Usertour
+    //.usertour
+    //[data-flexitour="backdrop"],
+    //[data-flexitour="step-background"],
+    //[data-flexitour="container"]
+    {
+        @include mb2_sronly();
+    }
+
+    .usertour {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+}
+
+
+
+
+
+/* ======================= COURSE NAVIGATION */
+
+
+.theme-coursenav.flexcols {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+
+    .builderpage.builderheading0 & {
+        @include mb2_sronly();
+    }
+
+    .builderpage.builderheading1 & {
+		max-width: $pagewidth;
+		margin: 0 auto 3rem auto;
+		padding: 0 15px;
+	}
+
+    > div {
+        flex: 0 0 49%;
+        max-width: 49%;
+    }
+
+    &.onlynext {
+        justify-content: flex-end;
+    }
+
+    @media only screen and (max-width: $wxsmalldevice) {
+        justify-content: center;
+        margin-top: 1rem;
+
+        > div {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-top: 1rem;
+        }
+
+        .coursenav-prev,
+        .coursenav-next {
+            text-align: center;
+        }
+    }
+
+}
+
+button.coursenav-link,
+.coursenav-link {
+    display: block;
+    border: solid 1px rgba(0,0,0,.1);
+    padding: .63rem 1.2rem;
+    @include mb2_border_radius(.18rem);
+    @include mb2_transition1(all, .15s);
+    width: 100%;
+
+    &:hover,
+    &:focus {
+        border-color: rgba(0,0,0,.07);
+        @include mb2_box_shadow(0 8px 14px, rgba(0,0,0,.1));
+    }
+
+     span {
+         display: block;
+     }
+
+     .coursenav-text {
+       color: var(--mb2-pb-headingscolor);
+       font-weight: var(--mb2-pb-fwheadings);
+       margin-bottom: .3rem;
+     }
+
+     .coursenav-modname {
+       color: $textcolor_lighten;
+       font-size: $fssmall;
+       line-height: 1.2;
+       white-space: nowrap;
+       text-overflow: ellipsis;
+       overflow: hidden;
+     }
+}
+
+.coursenav-prev {
+
+    .coursenav-link {
+        text-align: right;
+    }
+
+    .coursenav-text {
+        &:before {
+            content: '\2190';
+            margin-right: .3rem;
+        }
+    }
+
+    .dir-rtl & {
+        .coursenav-text {
+            &:before {
+                content: '\2192';
+            }
+        }
+    }
+}
+
+.coursenav-next {
+
+    .coursenav-link {
+        text-align: left;
+    }
+
+    .coursenav-text {
+        &:after {
+            content: '\2192';
+            margin-left: .3rem;
+        }
+    }
+
+    .dir-rtl & {
+        .coursenav-text {
+            &:after {
+                content: '\2190';
+            }
+        }
+    }
+}

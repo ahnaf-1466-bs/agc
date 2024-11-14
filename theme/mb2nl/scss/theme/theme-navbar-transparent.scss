@@ -1,0 +1,134 @@
+
+.tnavbar_transparent_light,
+.tnavbar_transparent {
+
+
+
+
+	#page-header {
+
+		.inner {
+			margin-top: $logoh + $menuh + 40px;
+		}
+	}
+
+
+
+
+
+	/* ================= ENROLMENT PAGE */
+
+	&.enrollment-page {
+		.row-topgap {
+			display: block;
+			width: 100%;
+			height: $logoh + 40px;
+		}
+
+		@media only screen and (min-width: $wmediumdevice){
+
+			.row-topgap {
+				height: $logoh + $menuh + 40px;
+			}
+
+		}
+	}
+
+
+
+
+
+
+}
+
+
+
+.tnavbar_transparent {
+	#main-navigation {
+
+		.main-navigation-inner {
+			background-color: rgba(255,255,255,.07);
+		}
+
+
+		.main-menu {
+
+			> li {
+
+				> a,
+				> button {
+
+					&:hover,
+					&:focus {
+						background-color: rgba(255,255,255,.05);
+					}
+				}
+
+			}
+
+
+			/* My courses menu item */
+
+			.mycourses {
+				> button {
+					background-color: rgba(255,255,255,.05);
+				}
+			}
+
+			/* Bookmarks menu item */
+
+			.bookmarks-item {
+				> button {
+					background-color: rgba(255,255,255,.07);
+				}
+
+			}
+
+			/* Language menu */
+
+			.lang-item {
+
+				> a {
+					background-color: rgba(255,255,255,.05);
+				}
+			}
+
+		}
+
+	}
+
+
+	@media only screen and (min-width: $wmediumdevice){
+
+		#main-navigation {
+
+			&.sticky-el {
+				.main-navigation-inner {
+					background-color: rgba(0,0,0,.9);
+				}
+			}
+
+		}
+
+
+	}
+
+
+
+	/* Header tools */
+
+	@media only screen and (min-width: $wmediumdevice){
+
+	    .header-tools {
+	        &.tools-pos1 {
+
+	            .header-tools-link,
+	            .popover-region-toggle {
+	                background-color: rgba(255,255,255,.1);
+	            }
+
+	        }
+	    }
+
+	}
+}

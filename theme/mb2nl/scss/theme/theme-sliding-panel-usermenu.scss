@@ -1,0 +1,126 @@
+
+.theme-loginform .usermenu {
+
+	float: left;
+
+	+a {
+		display: block;
+		float: right;
+		font-size: $fssmall;
+		color: var(--mb2-pb-textcolorondark) !important;
+		margin-bottom: 10px;
+		cursor: default;
+
+		img {
+			margin: 0 10px;
+			width: 34px;
+			@include mb2_border_radius(999px);
+			@include mb2_box_shadow(0 0 0 3px, rgba(255,255,255,.2));
+		}
+
+		.userinitials {
+			width: 34px;
+			height: 34px;
+			@include mb2_box_shadow(0 0 0 3px, rgba(255,255,255,.2));
+		}
+
+		.usertext {
+			.role {
+				margin-left: .6rem;
+			    padding: 0 .3rem;
+			    background-color: rgba(255,255,255,.1);
+			}
+		}
+	}
+
+	/* ====== Style on user prifile page */
+
+	+ .userinitials {
+		display: block;
+		width: 34px;
+		height: 34px;
+		line-height: 34px;
+		@include mb2_box_shadow(0 0 0 3px, rgba(255,255,255,.2));
+		float: right;
+		font-size: $fssmall;
+		margin-bottom: 10px;
+	}
+
+	.dropdown-toggle {
+		display: none !important;
+	}
+
+	.menu {
+		display: block!important;
+		margin: 0!important;
+		position: static;
+		padding: 0;
+		background-color: transparent;
+		border: 0;
+	}
+
+	.action-menu {
+		white-space: normal;
+	}
+
+
+	.dropdown-item {
+    	color: var(--mb2-pb-textcolorondark);
+		@include mb2_transition1(all, .15s);
+		padding: 2px 3px;
+		margin: 5px;
+		width: auto;
+	    font-size: $fssmall;
+		white-space: normal;
+		display: inline-block;
+
+		> i {
+			display: none;
+		}
+
+		&.active,
+		&:active,
+		&:hover,
+		&:focus,
+		&:focus-within {
+			outline: none;
+			color: #fff;
+			background-color: transparent !important;
+		}
+	}
+
+	.dropdown-divider {
+		width: 1px;
+		display: inline-block;
+		background-color: transparent !important;
+		border: 0;
+		border-right: solid 1px rgba(255,255,255,.2);
+		vertical-align: middle;
+		height: 10px !important;
+		margin: 0px !important;
+	}
+
+
+}
+
+
+
+
+@media only screen and (max-width: $wmediumdevice){
+
+	.theme-loginform .usermenu {
+		float: none;
+		+a {
+			float: none;
+		}
+
+		.action-menu-trigger,
+		.dropdown,
+		.dropdown-menu {
+			display: block;
+			width: 100%;
+			text-align: center;
+		}
+	}
+
+}

@@ -1,0 +1,17 @@
+
+.tnavbar {
+
+	#main-navigation {
+		
+    	--mb2-pb-navcolor: #fff;
+		--mb2-pb-navhcolor: #fff;
+
+		.main-navigation-inner {
+			@media only screen and (min-width: $wmediumdevice){
+				background-color: var(--mb2-pb-navbarbgcolor);
+			}
+		}
+	}
+
+
+}

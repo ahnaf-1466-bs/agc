@@ -1,0 +1,40 @@
+
+.pbanimnum-item {
+	padding: 1rem;
+	background-color: rgba($accent2, .3);
+
+	.center1 & {
+		text-align: center;
+	}
+
+	.nopadding1 & {
+		padding: 0;
+	}
+}
+
+.pbanimnum-icon,
+.pbanimnum-number {
+	line-height: 1;
+}
+
+.pbanimnum-icon {
+	margin-bottom: 1rem;
+
+	.icon0 & {
+		display: none;
+	}
+}
+
+.pbanimnum-title {
+	margin: .7rem 0 0 0;
+}
+
+.pbanimnum-subtitle {
+
+	.subtitle0 & {
+		display: none;
+	}
+
+	display: inline-block;
+	margin-top: .5rem;
+}

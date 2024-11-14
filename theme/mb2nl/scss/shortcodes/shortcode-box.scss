@@ -1,0 +1,117 @@
+
+.theme-cols {
+	.no-overflow & {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+
+
+.theme-boxes {
+	display: flex;
+	flex-wrap: wrap;
+
+	.mb2-pb-sortable-subelements {
+		flex: 0 0 100%;
+		max-width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&.gutter-normal {
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+
+	&.gutter-thin {
+		margin-left: -5px;
+		margin-right: -5px;
+	}
+
+	.nobuilderpage .no-overflow & {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	&.wave1 {
+		.theme-box:nth-child(even) {
+			margin-top: 3rem;
+
+			@media only screen and (max-width: $wxsmalldevice){
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+.theme-box {
+	position: relative;
+    width: 100%;
+
+	.gutter-normal & {
+		padding-right: 15px;
+		padding-left: 15px;
+		margin-bottom: 30px;
+	}
+
+	.gutter-thin & {
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-bottom: 10px;
+	}
+
+	.col-1 & {
+		float: none;
+	}
+}
+
+
+.theme-col-1 .theme-box { flex: 0 0 100%; width: 100%; }
+.theme-col-2 .theme-box { flex: 0 0 50%; width: 50%;	}
+.theme-col-3 .theme-box { flex: 0 0 33.3333333333%; width: 33.3333333333%; }
+.theme-col-4 .theme-box { flex: 0 0 25%; width: 25%;	}
+.theme-col-5 .theme-box { flex: 0 0 20%; width: 20%;	}
+
+
+@media only screen and (max-width: $wdmediumdevice){
+
+	.theme-col-2,
+	.theme-col-3,
+	.theme-col-4,
+	.theme-col-5 {
+		.theme-box {
+			flex: 0 0 50%; width: 50%;
+		}
+	}
+
+}
+
+
+
+@media only screen and (max-width: $wxsmalldevice){
+
+	.theme-col-2,
+	.theme-col-3,
+	.theme-col-4,
+	.theme-col-5 {
+		.theme-box {
+			flex: 0 0 100%; width: 100%;
+		}
+	}
+
+}
+
+
+.theme-box:not(.course-link-item) > a {
+	display: block;
+	text-decoration: none !important;
+	color: inherit;
+}
+
+.linkabs {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}

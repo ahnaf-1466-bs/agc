@@ -1,0 +1,211 @@
+
+
+/* Logo */
+.logo-wrap {
+	position: relative;
+	margin-right: 30px;
+	max-width: calc( 100% - 147px );
+
+	@media only screen and (max-width: $wdlargedevice){
+		margin-right: 15px;
+	}
+
+	@media only screen and (max-width: $wmediumdevice){
+		margin-right: 0;
+	}
+}
+
+
+
+.main-logo {
+
+	.logo-light,
+	.logo-dark {
+
+		&.is_svg {
+			height: $logoh !important;
+		}
+
+		&.no_svg {
+			max-height: $logoh;
+		}
+
+		width: auto;
+	}
+
+	.logo-dark {
+		display: none;
+	}
+
+	a {
+		display: block;
+	}
+
+
+	/* ====================== LOGO IN STICKY HEADER */
+
+	.fsmod-header-inner &,
+	.sticky-el & {
+
+		.logo-light,
+	   	.logo-dark {
+		   &.is_svg {
+			   height: $logohsm !important;
+		   }
+
+		   &.no_svg {
+			   max-height: $logohsm;
+		   }
+	   }
+
+	}
+
+
+	/* ====================== HEADER STYLE: DARK */
+
+	.theader_dark & {
+		.logo-light {
+			display: none;
+		}
+
+		.logo-dark {
+			display: block;
+		}
+	}
+
+
+	/* ====================== HEADER STYLE: TRANSPARENT */
+
+	.theader_transparent & {
+		.logo-light {
+			display: none;
+		}
+
+		.logo-dark {
+			display: block;
+		}
+	}
+
+	.theader_transparent .sticky-el & {
+		.logo-dark {
+			display: none;
+		}
+
+		.logo-light {
+			display: block;
+		}
+	}
+
+
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: $wxsmalldevice){
+
+	.theme-lfw  {
+		&.custom-login {
+			.main-logo {
+				margin: 0 auto !important;
+			}
+		}
+
+	}
+
+}
+
+
+.top-bar {
+	background-color: $color_gray2;
+	//font-size: $fssmall;
+	//font-weight: var(--mb2-pb-fwmedium);
+	min-height: 30px;
+
+	.social-list {
+		a {
+			width: 24px;
+			height: 24px;
+			line-height: 24px;
+			font-size: 12px;
+			margin: 3px 2px;
+		}
+	}
+
+	@media only screen and (max-width: $wmediumdevice){
+		display: none;
+	}
+}
+
+.header-innner {
+	position: relative;
+}
+
+#master-header {
+
+	.flexcols {
+		height: $logoh + 40px;
+	}
+
+	.header-content {
+		margin-right: auto;
+		margin-left: 30px;
+	}
+}
+
+
+#main-header {
+
+	position: relative;
+	z-index: 4;
+
+	.pagelayout-maintenance & {
+		border-bottom: solid 3px transparent;
+
+		h1 {
+			margin: 20px 0;
+		}
+	}
+
+	/* Static content */
+
+	.main-header-list {
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+
+		.static-icon {
+			margin-right: .4rem;
+		}
+
+		li {
+			display: inline-block;
+			margin-right: 15px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			a:not(.btn) {
+				color: inherit;
+			}
+		}
+	}
+
+
+}
+
+
+@media only screen and (max-width: $wmediumdevice){
+
+	#main-header {
+		.main-header-list,
+		.social-list {
+			display: none;
+		}
+	}
+}

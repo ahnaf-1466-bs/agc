@@ -1,0 +1,90 @@
+
+
+.social-list {
+	list-style: none;
+	margin-left: -3px !important;
+	margin-right: -3px !important;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+
+
+@media only screen and (max-width: $wmediumdevice){
+
+	.social-list {
+		text-align: center;
+
+		#main-header & {
+			margin: 0 !important;
+		}
+	}
+
+}
+
+
+
+.social-list {
+
+	li {
+		margin: 0;
+		padding: 0;
+		display: inline-block;
+	}
+
+
+	a {
+		text-decoration: none;
+		color: #fff!important;
+		display: block;
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		font-size: 15px;
+		margin: 3px;
+		@include mb2_border_radius(.1rem);
+		@include mb2_transition1(all, .15s);
+		position: relative;
+
+		&:hover,
+		&:focus {
+			@include mb2_trabsform_y(-3px);
+			//outline: none;
+		}
+	}
+
+
+	.mb2-pb-social.type2 & {
+		a {
+			border-radius: 50%;
+			width:39px;
+		    height:39px;
+		    line-height: 39px;
+			background-color: transparent;
+		    color: var(--mb2-pb-headingscolor) !important;
+		    font-size: 20px;
+		    border: solid 1px var(--mb2-pb-headingscolor);
+			margin-right: 6px;
+
+			&:hover,
+			&:focus {
+				background-color: var(--mb2-pb-headingscolor);
+			    color: #fff!important;
+			}
+		}
+	}
+
+}
+
+
+
+.li-android a {background-color: $color_android;} 		.li-dribbble a {background-color: $color_dribbble;} 	.li-dropbox a {background-color: $color_dropbox;}
+.li-facebook a {background-color: $color_facebook;}		.li-flickr a {background-color: $color_flickr;}			.li-github a {background-color: $color_github;}
+.li-google-plus a {background-color: $color_google;}	.li-instagram a {background-color: $color_instagram;}	.li-linkedin a {background-color: $color_linkedin;}
+.li-pinterest a {background-color: $color_pinterest;}	.li-rss a {background-color: $color_rss;}				.li-skype a {background-color: $color_skype;}
+.li-tumblr a {background-color: $color_tumblr;}			.li-twitter a {background-color: $color_twitter;}		.li-vimeo a {background-color: $color_vimeo;}
+.li-xing a {background-color: $color_xing;}				.li-youtube-play a {background-color: $color_youtube;}	.li-vk a {background-color: $color_vk;}
+.li-whatsapp a {background-color: $color_whatsapp;}		.li-apple a {background-color: $color_apple;}			.li-envelope a {background-color: $color_email;}
+.li-globe a {background-color: $color_web;}				.li-telegram a {background-color: $color_telegram;}		.li-spotify a {background-color: $color_spotify;}
+.li-tiktok a {background-color: $color_tiktok;}	

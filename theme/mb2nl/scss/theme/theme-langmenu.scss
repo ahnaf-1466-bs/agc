@@ -1,0 +1,87 @@
+
+
+/* Language menu flag */
+
+.lang-flag {
+	margin-right: .32rem;
+	width: 15px;
+}
+
+.theme-footer {
+
+	.lang-list {
+	  	margin: .6rem -.4rem 0 -.4rem;
+	  	padding: 0;
+	  	list-style: none;
+
+		li {
+		  	display: inline-block;
+			vertical-align: middle;
+		  	margin: 0 .4rem;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		.lang-shortname {
+		  display: none;
+		}
+	}
+
+}
+
+
+
+@media only screen and (max-width: $wmediumdevice){
+
+	.lang-shortname {
+		display: none;
+	}
+
+	.lang-fullname {
+		display: inline-block;
+	}
+}
+
+
+/* ==================== SHORTCODE */
+
+.mb2-pb-languages {
+
+	.lang-shortname {
+		display: none;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	a {
+		color: inherit;
+
+		&:hover,
+		&:focus {
+			color: $linkcolor;
+		}
+	}
+
+	&.image0 {
+		.lang-flag {
+			display: none;
+		}
+	}
+
+	&.horizontal1 {
+		ul {
+			margin: 0 -.4rem;
+
+			li {
+				display: inline-block;
+				margin: 0 .4rem;
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+
+.theader_light2 {
+
+	#main-header {
+		background-color: #fff;
+	}
+
+	&.pagelayout-maintenance {
+
+		#main-header {
+			border-bottom-color: $accent2;
+		}
+
+	}
+
+}
