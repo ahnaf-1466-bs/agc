@@ -4,7 +4,6 @@ env:
   parameter-store:
     AWS_REGION: "/agc/aws-region"
     ECR_REPOSITORY_URL: "/agc/ecr-repo-url"
-    PROJECT_NAME: "/agc/project_name"
     APP_PORT: "/agc/app_port"
     DOCKER_USERNAME: "/agc/docker-hub-username"
     DOCKER_PASSWORD: "/agc/docker-hub-password"
@@ -24,15 +23,11 @@ phases:
   build:
     commands:
       - echo Building Docker image for app Service on port $APP_PORT...
-      # - docker build --build-arg app_port=$APP_PORT -t app .
-      # - docker tag app:latest $ECR_REPOSITORY_URL/agc/app:v1
-      # - docker push $ECR_REPOSITORY_URL/agc/app:v1
+      - docker build --build-arg app_port=$APP_PORT -t app .
+      - docker tag app:latest $ECR_REPOSITORY_URL/agc/app:v1
+      - docker push $ECR_REPOSITORY_URL/agc/app:v1
 
   post_build:
     commands:
       - echo "Starting SSM automation execution..."
-      - aws ssm start-automation-execution \
-          --document-name "$SSM_AUTOMATION_DOCUMENT_NAME" \
-          --document-version "\$DEFAULT" \
-          --parameters "{\"AutomationAssumeRole\":[\"$SSM_AUTOMATION_ROLE_ARN\"],\"ASGName\":[\"$ASG_NAME\"]}" \
-          --region "$AWS_REGION"
+      - aws ssm start-automation-execution --document-name $SSM_AUTOMATION_DOCUMENT_NAME --document-version "\$DEFAULT" --parameters '{"AutomationAssumeRole":["'"$SSM_AUTOMATION_ROLE_ARN"'"],"ASGName":["'"$ASG_NAME"'"]}' --region $AWS_REGION
