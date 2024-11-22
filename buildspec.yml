@@ -8,6 +8,9 @@ env:
     APP_PORT: "/agc/app_port"
     DOCKER_USERNAME: "/agc/docker-hub-username"
     DOCKER_PASSWORD: "/agc/docker-hub-password"
+    SSM_AUTOMATION_DOCUMENT_NAME: "/agc/automation-document-name"
+    SSM_AUTOMATION_ROLE_ARN: "/agc/automation-role-arn"
+    ASG_NAME: "/agc/asg-name"
 
 phases:
   pre_build:
@@ -27,9 +30,6 @@ phases:
 
   post_build:
     commands:
-      - echo "Pushing Docker image to ECR..."
-      # - docker push $ECR_REPOSITORY_URL/$IMAGE_NAME:latest
-      # - echo "Triggering SSM Automation for deployment..."
-      # - aws ssm start-automation-execution --document-name "vumi-automation-runbook" \
-      #   --parameters '{"ASGName":["your-asg-name"],"ImageUri":["'"$ECR_REPOSITORY_URL/$IMAGE_NAME:latest"'"]}'
+      - echo "Starting SSM automation execution..."
+      - aws ssm start-automation-execution --document-name $SSM_AUTOMATION_DOCUMENT_NAME --document-version "\$DEFAULT" --parameters '{"AutomationAssumeRole":["'"$SSM_AUTOMATION_ROLE_ARN"'"],"ASGName":["'"$ASG_NAME"'"]}' --region $AWS_REGION
 
