@@ -23,11 +23,12 @@ phases:
   build:
     commands:
       - echo Building Docker image for app Service on port $APP_PORT...
-      - docker build --build-arg app_port=$APP_PORT -t app .
-      - docker tag app:latest $ECR_REPOSITORY_URL/agc/app:v1
-      - docker push $ECR_REPOSITORY_URL/agc/app:v1
+      # - docker build --build-arg app_port=$APP_PORT -t app .
+      # - docker tag app:latest $ECR_REPOSITORY_URL/agc/app:v1
+      # - docker push $ECR_REPOSITORY_URL/agc/app:v1
 
   post_build:
     commands:
       - echo "Starting SSM automation execution..."
-      - aws ssm start-automation-execution --document-name $SSM_AUTOMATION_DOCUMENT_NAME --document-version "\$DEFAULT" --parameters '{"AutomationAssumeRole":["'"$SSM_AUTOMATION_ROLE_ARN"'"],"ASGName":["'"$ASG_NAME"'"]}' --region $AWS_REGION
+      # - aws ssm start-automation-execution --document-name $SSM_AUTOMATION_DOCUMENT_NAME --document-version "\$DEFAULT" --parameters '{"AutomationAssumeRole":["'"$SSM_AUTOMATION_ROLE_ARN"'"],"ASGName":["'"$ASG_NAME"'"]}' --region $AWS_REGION\
+      - aws ssm start-automation-execution --document-name "agc-ar" --document-version "\$DEFAULT" --parameters '{"AutomationAssumeRole":["arn:aws:iam::767397776040:role/agc-automation-role"],"ASGName":["terraform-20241122142132172500000005"]}' --region ap-southeast-1
