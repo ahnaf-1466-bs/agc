@@ -22,8 +22,8 @@ phases:
     commands:
       - echo Building Docker image for app Service on port $APP_PORT...
       - docker build --build-arg app_port=$APP_PORT -t app .
-      - docker tag app:latest $ECR_REPOSITORY_URL/vumi/app:v1
-      - docker push $ECR_REPOSITORY_URL/vumi/app:v1
+      - docker tag app:latest $ECR_REPOSITORY_URL/agc/app:v1
+      - docker push $ECR_REPOSITORY_URL/agc/app:v1
 
   post_build:
     commands:
