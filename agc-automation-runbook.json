@@ -1,0 +1,72 @@
+{
+    "schemaVersion": "0.3",
+    "description": "Lists instance IDs in a specified Auto Scaling Group (ASG) and creates a file on them.",
+    "assumeRole": "{{ AutomationAssumeRole }}",
+    "parameters": {
+      "AutomationAssumeRole": {
+        "type": "String",
+        "description": "(Optional) The ARN of the role that allows Automation to perform actions on your behalf."
+      },
+      "ASGName": {
+        "type": "String",
+        "description": "The name of the Auto Scaling Group."
+      }
+    },
+    "mainSteps": [
+      {
+        "name": "DescribeAutoScalingGroup",
+        "action": "aws:executeAwsApi",
+        "nextStep": "SendCommandGitPull",
+        "isEnd": false,
+        "inputs": {
+          "Service": "autoscaling",
+          "Api": "DescribeAutoScalingGroups",
+          "AutoScalingGroupNames": [
+            "{{ ASGName }}"
+          ]
+        },
+        "outputs": [
+          {
+            "Name": "InstanceIds",
+            "Selector": "$.AutoScalingGroups[0].Instances..InstanceId",
+            "Type": "StringList"
+          }
+        ]
+      },
+      {
+        "name": "SendCommandGitPull",
+        "action": "aws:executeAwsApi",
+        "nextStep": "SendCommandDockerReRun",
+        "isEnd": false,
+        "inputs": {
+          "Service": "ssm",
+          "Api": "SendCommand",
+          "InstanceIds": "{{ DescribeAutoScalingGroup.InstanceIds }}",
+          "TimeoutSeconds": 600,
+          "DocumentName": "AWS-RunShellScript",
+          "Parameters": {
+            "commands": [
+              "su ubuntu && cd /mnt/efs/agc && sudo git pull origin main"
+            ]
+          }
+        }
+      },
+      {
+        "name": "SendCommandDockerReRun",
+        "action": "aws:executeAwsApi",
+        "isEnd": true,
+        "inputs": {
+          "Service": "ssm",
+          "Api": "SendCommand",
+          "InstanceIds": "{{ DescribeAutoScalingGroup.InstanceIds }}",
+          "TimeoutSeconds": 600,
+          "DocumentName": "AWS-RunShellScript",
+          "Parameters": {
+            "commands": [
+              "cd /home/ubuntu && ./agc_cleanup_relaunch.sh"
+            ]
+          }
+        }
+      }
+    ]
+  }
