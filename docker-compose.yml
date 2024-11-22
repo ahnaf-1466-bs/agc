@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  app:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - app_port=${APP_PORT}
+    
+    container_name: ${PROJECT_NAME}_moodle_local
+    network_mode: host
+    # ports:
+    #   - "8044:8044"
+    volumes:
+      - ./moodle:/var/www/html
+      - ./moodledata:/var/www/moodledata:rw
+    restart: always
